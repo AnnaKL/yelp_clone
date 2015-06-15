@@ -3,6 +3,7 @@
   <h2><%= restaurant.name %></h2>
   <%=link_to restaurant.name, restaurant_path(restaurant) %>
   <%= link_to "Edit #{restaurant.name}", edit_restaurant_path(restaurant) %>
+  <%= link_to "Delete #{restaurant.name}", restaurant_path(restaurant), method: :delete %>
   <% end %>
 <% else%>
 <h1> No restaurants yet</h1>

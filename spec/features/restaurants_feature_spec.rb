@@ -1,6 +1,14 @@
 require 'rails_helper'
 
 feature 'restaurants' do
+  before do
+    visit('/')
+    click_link('Sign up')
+    fill_in('Email', with: 'test@example.com')
+    fill_in('Password', with: 'testpassword')
+    fill_in('Password confirmation', with: 'testpassword')
+    click_button('Sign up')
+  end
   context 'no restaurants have been added' do
     scenario 'should desplay a prompt to add a restaurant' do
       visit '/restaurants'

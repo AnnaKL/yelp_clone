@@ -1,4 +1,4 @@
-ra<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <title>YelpClone</title>
@@ -9,6 +9,12 @@ ra<!DOCTYPE html>
 <body>
 <%= notice %>
 <%= alert %>
+<% if user_signed_in? %>
+  <%= link_to 'Sign out', destroy_user_session_path, method: :delete %>
+<% else %>
+  <%= link_to 'Sign in', new_user_session_path %>
+  <%= link_to 'Sign up', new_user_registration_path %>
+<% end %>
 <%= yield %>
 
 </body>

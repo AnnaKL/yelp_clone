@@ -4,8 +4,10 @@ Rails.application.routes.draw do
   get 'restaurants' => 'restaurants#index'
   root to: 'restaurants#index'
 
-  resources :restaurants do
-    resources :reviews
+  resources :restaurants, shallow: true do
+    resources :reviews do
+      resources :endorsements
+    end
   end
 
   devise_scope :user do

@@ -13,6 +13,8 @@
           <li>
             <%= review.thoughts %> [<strong><%= review.rating %></strong>/5]
           </li>
+          <%= pluralize review.endorsements.count, 'endorsement' %>
+        <%= link_to "Endorse this review", review_endorsements_path(review), method: :post %>
         <% end %>
       </ul>
     <% else %>

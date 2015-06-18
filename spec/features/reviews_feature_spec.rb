@@ -10,14 +10,20 @@ feature 'reviewing' do
 
   visit '/restaurants'
 
-  sign_in
-  click_link 'Review KFC'
-  fill_in 'Thoughts', with: "so, so"
-  select '3', from: 'Rating'
-  click_button 'Leave Review'
+  sign_in('test@test.com', 'test1234')
+  leave_review('so, so', '2')
   expect(current_path).to eq '/restaurants'
   expect(page).to have_content('so, so')
   end
+
+  scenario 'allows only one review per user per restaurant' do
+    visit '/restaurants'
+    sign_in('test@test.com', 'test1234')
+    leave_review('so, so', '2')
+    leave_review('amazeballs', '5')
+    expect(page).to have_content('You have already reviewed this restaurant')
+  end
+
 end
 
 

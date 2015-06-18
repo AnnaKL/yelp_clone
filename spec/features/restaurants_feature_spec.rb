@@ -68,13 +68,21 @@ feature 'restaurants' do
   context 'editing restaurants' do
     before{Restaurant.create name: 'KFC'}
 
-    scenario 'let a user edit a restaurant' do
+    scenario 'non creator cannot edit a restaurant' do
       visit '/restaurants'
       click_link('Edit KFC')
-      fill_in('Name', with: 'Kentucky Fried Chicken')
+      expect(page).to have_content('KFC')
+      expect(page).to have_content 'You can only edit a restaurant that you have created'
+    end
+
+    scenario 'the creator can edit a restaurant' do
+      visit '/restaurants'
+      create_restaurant('Trade')
+      click_link('Edit Trade')
+      fill_in('Name', with: 'Trade - the home of cakes')
       click_button 'Update Restaurant'
-      expect(page).to have_content('Kentucky Fried Chicken')
-      expect(current_path).to eq '/restaurants'
+      expect(page).to have_content 'Trade - the home of cakes'
+      expect(page).to have_content 'Restaurant edited successfully'
     end
   end
 

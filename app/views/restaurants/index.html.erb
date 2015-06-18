@@ -12,9 +12,9 @@
         <% restaurant.reviews.each do |review| %>
           <li>
             <%= review.thoughts %> [<strong><%= review.rating %></strong>/5]
+            <%= link_to "Endorse", review_endorsements_path(review), class: 'endorsements-link' %>
+            <span class="endorsements_count"> <%= review.endorsements.count %> </span> <%= 'endorsement'.pluralize(review.endorsements.count) %>
           </li>
-          <%= pluralize review.endorsements.count, 'endorsement' %>
-        <%= link_to "Endorse this review", review_endorsements_path(review), method: :post %>
         <% end %>
       </ul>
     <% else %>

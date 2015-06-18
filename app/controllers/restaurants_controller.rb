@@ -20,7 +20,7 @@ class RestaurantsController < ApplicationController
   end
 
   def restaurant_params
-    params.require(:restaurant).permit(:name)
+    params.require(:restaurant).permit(:name, :image)
   end
 
   def show
@@ -29,7 +29,7 @@ class RestaurantsController < ApplicationController
 
   def edit
     @restaurant = Restaurant.find(params[:id])
-    if @restaurant.user != current_user 
+    if @restaurant.user != current_user
       redirect_to restaurants_path, alert: 'You can only edit a restaurant that you have created'
     end
   end
@@ -47,9 +47,9 @@ class RestaurantsController < ApplicationController
       @restaurant.destroy
       flash[:notice] = 'Restaurant deleted successfully'
       redirect_to '/restaurants'
-    else 
+    else
       redirect_to restaurants_path, alert: 'You can only delete a restaurant that you have created'
-    end   
+    end
   end
 
 end

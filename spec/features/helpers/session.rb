@@ -1,7 +1,7 @@
 module SessionHelpers
 
   def sign_in(email, password)
-    User.create(email: 'test@test.com', password: 'test1234')
+    User.create(email: email, password: password)
     visit '/users/sign_in'
     fill_in 'Email', with: email
     fill_in 'Password', with: password

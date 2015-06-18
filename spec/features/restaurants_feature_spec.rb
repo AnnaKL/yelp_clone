@@ -1,4 +1,6 @@
 require 'rails_helper'
+require_relative 'helpers/session'
+include SessionHelpers
 
 feature 'restaurants' do
   before do
@@ -79,10 +81,17 @@ feature 'restaurants' do
   context 'deleting restaurants' do
     before {Restaurant.create name: 'KFC'}
 
-    scenario 'removes a restaurant when a user clicks a delete link' do
+    scenario 'non creator cannot delete a restaurant' do
       visit '/restaurants'
       click_link 'Delete KFC'
-      expect(page).not_to have_content 'KFC'
+      expect(page).to have_content 'KFC'
+      expect(page).to have_content 'You can only delete a restaurant that you have created'
+    end
+
+    scenario 'only the creator can delete a restaurant' do
+      create_restaurant('Trade')
+      click_link 'Delete Trade'
+      expect(page).not_to have_content 'Trade'
       expect(page).to have_content 'Restaurant deleted successfully'
     end
   end

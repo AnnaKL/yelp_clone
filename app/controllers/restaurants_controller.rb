@@ -11,7 +11,7 @@ class RestaurantsController < ApplicationController
   end
 
   def create
-    @restaurant = Restaurant.new(restaurant_params)
+    @restaurant = Restaurant.new(restaurant_params.merge(user: current_user))
     if @restaurant.save
       redirect_to restaurants_path
     else
@@ -40,9 +40,13 @@ class RestaurantsController < ApplicationController
 
   def destroy
     @restaurant = Restaurant.find(params[:id])
-    @restaurant.destroy
-    flash[:notice] = 'Restaurant deleted successfully'
-    redirect_to '/restaurants'
+    if @restaurant.user == current_user
+      @restaurant.destroy
+      flash[:notice] = 'Restaurant deleted successfully'
+      redirect_to '/restaurants'
+    else 
+      redirect_to restaurants_path, alert: 'You can only delete a restaurant that you have created'
+    end   
   end
 
 end

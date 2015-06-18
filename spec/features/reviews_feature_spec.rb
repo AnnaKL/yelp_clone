@@ -1,4 +1,4 @@
-require 'rails_helper'
+  require 'rails_helper'
 require_relative 'helpers/session'
 include SessionHelpers
 
@@ -31,7 +31,7 @@ feature 'reviewing' do
     click_link 'Sign out'
     sign_in('bob@bom.com', '22222222')
     leave_review('great', '5')
-    expect(page).to have_content('Average rating: 4')
+    expect(page).to have_content('Average rating: ★★★★☆')
   end
 
 end
